@@ -1,0 +1,24 @@
+name: Check Lint and Unit Test Setting
+
+on:
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  test:
+    name: Check Source Code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2.3.0
+        with:
+          flutter-version: '3.24.3'
+      - name: Install packages
+        run: flutter pub get
+
+      - name: Check Linter
+        run: flutter analyze
+
+      - name: Unit Test
+        run: flutter test
