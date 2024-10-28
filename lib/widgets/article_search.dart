@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:zenn_app/models/article.dart';
-import 'package:zenn_app/models/user.dart';
 import 'package:zenn_app/widgets/article_container.dart';
 
 class ArticleSearch extends StatefulWidget {
