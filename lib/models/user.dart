@@ -13,7 +13,7 @@ class User {
   // JSONからUserを生成するファクトリコンストラクタ
   factory User.fromJson(dynamic json) {
     return User(
-      id: json['id'] as String,
+      id: json['id'].toString(),
       avatarSmallUrl: json['avatar_small_url'] as String,
     );
   }
