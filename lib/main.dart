@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      final data = json.decode(response.body);
+      // final data = json.decode(response.body);
       // print(data); // 取得したデータを利用
     } else {
       //print('Failed to fetch articles');
