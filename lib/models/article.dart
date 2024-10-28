@@ -20,4 +20,15 @@ class Article {
   final User user;
   final int likesCount;
   final String url;
+
+  // JSONからArticleを生成するファクトリコンストラクタ
+  factory Article.fromJson(dynamic json) {
+    return Article(
+      title: json['title'] as String,
+      user: User.fromJson(json['user']), // User.fromJson()を使ってUserを生成
+      url: json['path'] as String,
+      publishedAt: DateTime.parse(json['published_at'] as String), // DateTime.parse()を使って文字列をDateTimeに変換
+      likesCount: json['liked_count'] as int,
+    );
+  }
 }
