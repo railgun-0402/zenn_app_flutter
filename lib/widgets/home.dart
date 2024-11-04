@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zenn_app/widgets/article_search.dart';
+import 'package:zenn_app/widgets/setting.dart';
+
+import 'article_latest.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -10,8 +13,12 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   static const _screens = [
+    /* 最新記事一覧 */
+    ArticleLatest(),
+    /* 記事検索 */
     ArticleSearch(),
-    ArticleSearch(),
+    /* 設定画面 */
+    Setting(),
   ];
 
   int _selectedIndex = 0;
@@ -31,11 +38,9 @@ class _HomeState extends State<Home> {
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
           items: const <BottomNavigationBarItem> [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'ホーム'),
-            BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'お気に入り'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.notifications), label: 'お知らせ'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'アカウント'),
+            BottomNavigationBarItem(icon: Icon(Icons.bolt), label: '最新記事'),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: '検索'),
+            BottomNavigationBarItem(icon: Icon(Icons.settings), label: '設定'),
           ],
           type: BottomNavigationBarType.fixed,
         ),
