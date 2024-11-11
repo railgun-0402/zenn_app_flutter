@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:zenn_app/widgets/article_search.dart';
 import 'package:zenn_app/widgets/setting.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 
 import 'article_latest.dart';
 
@@ -32,6 +35,16 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'), // 英語
+        Locale('ja'), // 日本語
+      ],
       home: Scaffold(
         body: _screens[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
