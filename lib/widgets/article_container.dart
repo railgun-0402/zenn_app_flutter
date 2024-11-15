@@ -1,15 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:zenn_app/helper/StorageHelper.dart';
 import 'package:zenn_app/models/article.dart';
 import 'package:zenn_app/widgets/article_screen.dart';
 
-class ArticleContainer extends StatelessWidget {
+class ArticleContainer extends StatefulWidget {
   const ArticleContainer({
     super.key,
     required this.article,
   });
 
   final Article article;
+
+  @override
+  State<ArticleContainer> createState() => _ArticleContainerState();
+}
+
+class _ArticleContainerState extends State<ArticleContainer> {
+  void toggleFavorite(int id) {
+    setState(() {
+      if (id != -1) {
+        // お気に入りした場合、falseが渡される
+        widget.article.isFavorite
+        ? StorageHelper.removeFavorite(widget.article)
+        : StorageHelper.saveFavorites(widget.article);
+
+        widget.article.isFavorite = !widget.article.isFavorite;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +41,7 @@ class ArticleContainer extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: ((context) => ArticleScreen(article: article)),
+              builder: ((context) => ArticleScreen(article: widget.article)),
             ),
           );
         },
@@ -42,7 +61,7 @@ class ArticleContainer extends StatelessWidget {
             children: [
               // 公開日
               Text(
-                  DateFormat('yyyy/MM/dd').format(article.publishedAt),
+                  DateFormat('yyyy/MM/dd').format(widget.article.publishedAt),
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
@@ -51,7 +70,7 @@ class ArticleContainer extends StatelessWidget {
 
               // タイトル
               Text(
-                article.title,
+                widget.article.title,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -73,7 +92,7 @@ class ArticleContainer extends StatelessWidget {
                         color: Colors.white,
                       ),
                       Text(
-                        article.likesCount.toString(),
+                        widget.article.likesCount.toString(),
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.white,
@@ -82,17 +101,27 @@ class ArticleContainer extends StatelessWidget {
                     ],
                   ),
 
+                  IconButton(
+                    icon: Icon(
+                      widget.article.isFavorite ? Icons.favorite : Icons.favorite_border,
+                      color: widget.article.isFavorite ? Colors.red : Colors.grey,
+                    ),
+                    onPressed: () => {
+                      toggleFavorite(widget.article.id),
+                    },
+                  ),
+
                   // 投稿者アイコンとユーザ名
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       CircleAvatar(
                         radius: 26,
-                        backgroundImage: NetworkImage(article.user.avatarSmallUrl),
+                        backgroundImage: NetworkImage(widget.article.user.avatarSmallUrl),
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        article.user.id,
+                        widget.article.user.id,
                         style: const TextStyle(
                           fontSize: 14,
                           color: Colors.white,

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zenn_app/models/article.dart';
 import 'package:http/http.dart' as http;
 import 'package:zenn_app/widgets/article_container.dart';
@@ -26,8 +27,28 @@ class _ArticleLatestState extends State<ArticleLatest> {
   // 記事を取得して状態を更新する非同期メソッド
   Future<void> fetchArticles() async {
     final articles = await searchArticles(); // ユーザー名を指定
+
+    // お気に入りデータ
+    final prefs = await SharedPreferences.getInstance();
+    final favoriteArticles = prefs.getStringList('favorites') ?? [];
+
     setState(() {
-      latestArticles = articles;
+      latestArticles = articles.map((article) {
+        final isFavorite = favoriteArticles.any((favorite) {
+          final favoriteArticles = jsonDecode(favorite);
+          return favoriteArticles['id'] == article.id;
+        });
+
+        return Article(
+          id: article.id,
+          publishedAt: article.publishedAt,
+          title: article.title,
+          user: article.user,
+          likesCount: article.likesCount,
+          url: article.url,
+          isFavorite: isFavorite,
+        );
+      }).toList();
       isLoading = false; // 読み込み完了後にフラグを更新
     });
   }
