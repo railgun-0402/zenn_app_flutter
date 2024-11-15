@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:zenn_app/helper/storage_helper.dart';
+import 'package:zenn_app/widgets/settings/favorite_articles.dart';
 
 class Setting extends StatefulWidget {
   const Setting({super.key});
@@ -39,7 +41,30 @@ class _SettingState extends State<Setting> {
                     leading: const Icon(Icons.format_paint),
                 ),
               ],
-            )
+            ),
+            SettingsSection(
+                title: const Text('記事管理'),
+                tiles: <SettingsTile> [
+                  SettingsTile.navigation(
+                      title: const Text('お気に入り'),
+                      onPressed: (context) async {
+                        final favorites = await StorageHelper.getFavorites();
+
+                        // ウィジェットがまだマウントされている場合のみNavigatorを使用
+                        if (!mounted) return;
+
+                        // お気に入り一覧画面へ
+                        Navigator.push(
+                          // ignore: use_build_context_synchronously
+                            context,
+                            MaterialPageRoute(builder: (context) => FavoriteArticles(
+                                favoriteArticles: favorites
+                            )),
+                        );
+                      },
+                  ),
+                ],
+            ),
           ],
         ),
       );

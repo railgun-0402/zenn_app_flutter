@@ -10,11 +10,22 @@ class User {
   final String id;
   final String avatarSmallUrl;
 
+  // JSONに変換
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'avatarSmallUrl': avatarSmallUrl,
+  };
+
   // JSONからUserを生成するファクトリコンストラクタ
-  factory User.fromJson(dynamic json) {
+  factory User.fromJson(Map<String, dynamic> json, isStorage) {
+    String key = '';
+    isStorage
+    ? key = 'avatarSmallUrl'
+    : key = 'avatar_small_url';
+
     return User(
       id: json['id'].toString(),
-      avatarSmallUrl: json['avatar_small_url'] as String,
+      avatarSmallUrl: json[key] as String,
     );
   }
 }
