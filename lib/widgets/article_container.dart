@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:zenn_app/helper/StorageHelper.dart';
+import 'package:zenn_app/helper/storage_helper.dart';
 import 'package:zenn_app/models/article.dart';
 import 'package:zenn_app/widgets/article_screen.dart';
 
