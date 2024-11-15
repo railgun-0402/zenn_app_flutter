@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:zenn_app/helper/StorageHelper.dart';
-import 'package:zenn_app/models/article.dart';
 import 'package:zenn_app/widgets/settings/favorite_articles.dart';
 
 class Setting extends StatefulWidget {
