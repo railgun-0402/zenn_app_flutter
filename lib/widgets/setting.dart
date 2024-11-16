@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:zenn_app/helper/storage_helper.dart';
+import 'package:zenn_app/models/article.dart';
 import 'package:zenn_app/widgets/settings/favorite_articles.dart';
 
 class Setting extends StatefulWidget {
@@ -13,52 +14,64 @@ class Setting extends StatefulWidget {
 
 class _SettingState extends State<Setting> {
 
+  /* お気に入り一覧 */
+  List<Article> _favorites = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFavorites();
+  }
+
+  /* お気に入り一覧を取得 */
+  Future<void> _loadFavorites() async {
+    final favorites = await StorageHelper.getFavorites();
+    // Widgetがマウントされている場合、Navigatorを使用
+    if (!mounted) return;
+
+    setState(() {
+      _favorites = favorites;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final appBarTitle = AppLocalizations.of(context)!.title;
+    final settingTitle = AppLocalizations.of(context)!.language;
+    final languageSectionTitle = AppLocalizations.of(context)!.language;
+    final articleManage = AppLocalizations.of(context)!.articleManage;
+    final favoriteMenu = AppLocalizations.of(context)!.favorite;
+
     return Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.title),
+          title: Text(appBarTitle),
           backgroundColor: Colors.blue,
         ),
         body: SettingsList( // 設定画面を構築
           sections: [
             SettingsSection(
-              title: Text(AppLocalizations.of(context)!.language),
+              title: Text(settingTitle),
               tiles:<SettingsTile> [
                 SettingsTile.navigation(
                   leading: const Icon(Icons.language),
-                    title: Text(AppLocalizations.of(context)!.language),
-                    value: Text(AppLocalizations.of(context)!.language),
+                    title: Text(languageSectionTitle),
+                    value: Text(languageSectionTitle),
                   onPressed: (context) {
                   },
-                ),
-                SettingsTile.switchTile(
-                    initialValue: true,
-                    onToggle: (value) {
-                      // トグルの切り替え処理
-                    },
-                    title: const Text('Enable custom theme'),
-                    leading: const Icon(Icons.format_paint),
                 ),
               ],
             ),
             SettingsSection(
-                title: const Text('記事管理'),
+                title: Text(articleManage),
                 tiles: <SettingsTile> [
                   SettingsTile.navigation(
-                      title: const Text('お気に入り'),
+                      title: Text(favoriteMenu),
                       onPressed: (context) async {
-                        final favorites = await StorageHelper.getFavorites();
-
-                        // ウィジェットがまだマウントされている場合のみNavigatorを使用
-                        if (!mounted) return;
-
                         // お気に入り一覧画面へ
-                        Navigator.push(
-                          // ignore: use_build_context_synchronously
-                            context,
-                            MaterialPageRoute(builder: (context) => FavoriteArticles(
-                                favoriteArticles: favorites
+                        Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (_) => FavoriteArticles(
+                                favoriteArticles: _favorites
                             )),
                         );
                       },

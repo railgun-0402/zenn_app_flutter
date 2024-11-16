@@ -3,5 +3,7 @@
   "language": "Language",
   "enableCustomTheme": "Enable custom theme",
   "english": "English",
-  "japanese": "Japanese"
+  "japanese": "Japanese",
+  "articleManage": "ArticleManage",
+  "favorite": "Favorite"
 }
