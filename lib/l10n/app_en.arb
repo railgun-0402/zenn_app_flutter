@@ -5,5 +5,7 @@
   "english": "English",
   "japanese": "Japanese",
   "articleManage": "ArticleManage",
-  "favorite": "Favorite"
+  "favorite": "Favorite",
+  "version": "version",
+  "historyArticles": "historyArticles"
 }
