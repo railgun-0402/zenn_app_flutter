@@ -1,38 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:zenn_app/helper/storage_helper.dart';
-import 'package:zenn_app/models/article.dart';
 import 'package:zenn_app/widgets/settings/favorite_articles.dart';
 
-class Setting extends StatefulWidget {
+class Setting extends StatelessWidget {
   const Setting({super.key});
-
-  @override
-  State<Setting> createState() => _SettingState();
-}
-
-class _SettingState extends State<Setting> {
-
-  /* お気に入り一覧 */
-  List<Article> _favorites = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _loadFavorites();
-  }
-
-  /* お気に入り一覧を取得 */
-  Future<void> _loadFavorites() async {
-    final favorites = await StorageHelper.getFavorites();
-    // Widgetがマウントされている場合、Navigatorを使用
-    if (!mounted) return;
-
-    setState(() {
-      _favorites = favorites;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +42,7 @@ class _SettingState extends State<Setting> {
                         // お気に入り一覧画面へ
                         Navigator.of(context).push(
                             MaterialPageRoute(
-                                builder: (_) => FavoriteArticles(
-                                favoriteArticles: _favorites
+                                builder: (_) => const FavoriteArticles(
                             )),
                         );
                       },

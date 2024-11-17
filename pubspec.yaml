@@ -45,6 +45,7 @@ dependencies:
   webview_flutter: ^4.10.0
   settings_ui: ^2.0.2
   shared_preferences: ^2.3.3
+  provider: ^6.1.2
 
 dev_dependencies:
   flutter_test:
