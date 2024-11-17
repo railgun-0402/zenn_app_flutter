@@ -5,5 +5,7 @@
   "english": "英語",
   "japanese": "日本語",
   "articleManage": "記事管理",
-  "favorite": "お気に入り"
+  "favorite": "お気に入り",
+  "version": "バージョン",
+  "historyArticles": "閲覧履歴"
 }
