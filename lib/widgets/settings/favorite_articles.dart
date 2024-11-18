@@ -60,7 +60,7 @@ class FavoriteArticles extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            AppLocalizations.of(context)!.notFoundFavoriteArticles,
+            'お気に入り記事がありません',
             style: const TextStyle(fontSize: 18, color: Colors.grey),
           ),
           const SizedBox(height: 16),
