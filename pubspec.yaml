@@ -46,6 +46,8 @@ dependencies:
   settings_ui: ^2.0.2
   shared_preferences: ^2.3.3
   provider: ^6.1.2
+  mockito: ^5.4.4
+  build_runner: ^2.4.13
 
 dev_dependencies:
   flutter_test:
