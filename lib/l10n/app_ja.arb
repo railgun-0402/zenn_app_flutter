@@ -7,5 +7,7 @@
   "articleManage": "記事管理",
   "favorite": "お気に入り",
   "version": "バージョン",
-  "historyArticles": "閲覧履歴"
+  "historyArticles": "閲覧履歴",
+  "notFoundFavoriteArticles": "お気に入り記事がありません",
+  "screenBack": "前の画面に戻る"
 }
