@@ -7,5 +7,7 @@
   "articleManage": "ArticleManage",
   "favorite": "Favorite",
   "version": "version",
-  "historyArticles": "historyArticles"
+  "historyArticles": "historyArticles",
+  "notFoundFavoriteArticles": "Not Found Favorite Articles",
+  "screenBack": "Return to Previous Screen"
 }
