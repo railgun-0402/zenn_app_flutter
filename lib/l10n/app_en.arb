@@ -9,5 +9,6 @@
   "version": "version",
   "historyArticles": "historyArticles",
   "notFoundFavoriteArticles": "Not Found Favorite Articles",
-  "screenBack": "Return to Previous Screen"
+  "screenBack": "Return to Previous Screen",
+  "latestArticles": "Latest Articles"
 }
