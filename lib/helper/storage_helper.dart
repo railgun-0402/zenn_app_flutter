@@ -45,4 +45,12 @@ class StorageHelper {
           );
         }).toList();
   }
+
+  /* お気に入り記事かどうか確認 */
+  static bool isArticleFavorite(List<String> favorites, int articleId) {
+    return favorites.any((favorite) {
+      final favoriteArticles = jsonDecode(favorite);
+      return favoriteArticles['id'] == articleId;
+    });
+  }
 }

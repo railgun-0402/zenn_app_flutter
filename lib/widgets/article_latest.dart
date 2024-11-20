@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zenn_app/helper/storage_helper.dart';
 import 'package:zenn_app/models/article.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:zenn_app/repository/http_api_articles.dart';
 import 'package:zenn_app/widgets/article_container.dart';
 
 class ArticleLatest extends StatefulWidget {
@@ -26,18 +28,18 @@ class _ArticleLatestState extends State<ArticleLatest> {
 
   // 記事を取得して状態を更新する非同期メソッド
   Future<void> fetchArticles() async {
-    final articles = await searchArticles(); // ユーザー名を指定
+    final articles = await HttpApiArticles.searchArticles(); // ユーザー名を指定
 
     // お気に入りデータ
-    final prefs = await SharedPreferences.getInstance();
-    final favoriteArticles = prefs.getStringList('favorites') ?? [];
+    // final prefs = await SharedPreferences.getInstance();
+    final favoriteArticles = await StorageHelper.getFavorites();
 
     setState(() {
       latestArticles = articles.map((article) {
-        final isFavorite = favoriteArticles.any((favorite) {
-          final favoriteArticles = jsonDecode(favorite);
-          return favoriteArticles['id'] == article.id;
-        });
+        final isFavorite = StorageHelper.isArticleFavorite(
+            favoriteArticles.map((a) => jsonEncode(a.toJson())).toList(),
+            article.id,
+        );
 
         return Article(
           id: article.id,
@@ -58,7 +60,7 @@ class _ArticleLatestState extends State<ArticleLatest> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Zenn'),
+          title: Text(AppLocalizations.of(context)!.latestArticles),
           backgroundColor: Colors.blue,
         ),
         body: isLoading
@@ -70,19 +72,5 @@ class _ArticleLatestState extends State<ArticleLatest> {
         ),
       ),
     );
-  }
-
-  /* 記事取得APIの実行メソッド */
-  Future<List<Article>> searchArticles() async {
-    final url = Uri.parse('https://zenn.dev/api/articles?order=latest');
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-      final List<dynamic> articles = jsonResponse['articles'];
-      return articles.map((dynamic json) => Article.fromJson(json)).toList();
-    } else {
-      return [];
-    }
   }
 }
