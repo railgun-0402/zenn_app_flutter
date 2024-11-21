@@ -10,5 +10,7 @@
   "historyArticles": "閲覧履歴",
   "notFoundFavoriteArticles": "お気に入り記事がありません",
   "screenBack": "前の画面に戻る",
-  "latestArticles": "最新記事"
+  "latestArticles": "最新記事",
+  "searchArticlesPage": "記事検索",
+  "searchHintText": "検索したい記事を入力しよう"
 }

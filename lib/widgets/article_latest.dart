@@ -27,7 +27,7 @@ class _ArticleLatestState extends State<ArticleLatest> {
 
   // 記事を取得して状態を更新する非同期メソッド
   Future<void> fetchArticles() async {
-    final articles = await HttpApiArticles.searchArticles(); // ユーザー名を指定
+    final articles = await HttpApiArticles.searchArticles(false, ''); // ユーザー名を指定
 
     // お気に入りデータ
     // final prefs = await SharedPreferences.getInstance();

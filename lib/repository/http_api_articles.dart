@@ -5,8 +5,13 @@ import 'package:zenn_app/models/article.dart';
 
 class HttpApiArticles {
   /* 記事取得APIの実行メソッド */
-  static Future<List<Article>> searchArticles() async {
-    final url = Uri.parse('https://zenn.dev/api/articles?order=latest');
+  static Future<List<Article>> searchArticles(bool isSearch, String keyword) async {
+    Uri url;
+
+    isSearch
+    ? url = Uri.parse('https://zenn.dev/api/articles?tag=$keyword')
+    : url = Uri.parse('https://zenn.dev/api/articles?order=latest');
+
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
