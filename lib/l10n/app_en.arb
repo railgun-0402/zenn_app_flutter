@@ -10,5 +10,7 @@
   "historyArticles": "historyArticles",
   "notFoundFavoriteArticles": "Not Found Favorite Articles",
   "screenBack": "Return to Previous Screen",
-  "latestArticles": "Latest Articles"
+  "latestArticles": "Latest Articles",
+  "searchArticlesPage": "Search Articles Page",
+  "searchHintText": "Input Search Keyword!"
 }

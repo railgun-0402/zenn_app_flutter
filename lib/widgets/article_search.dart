@@ -1,9 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:zenn_app/models/article.dart';
+import 'package:zenn_app/repository/http_api_articles.dart';
 import 'package:zenn_app/widgets/article_container.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ArticleSearch extends StatefulWidget {
   const ArticleSearch({super.key});
@@ -21,7 +20,7 @@ class _ArticleSearchState extends State<ArticleSearch> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Zenn'),
+          title: Text(AppLocalizations.of(context)!.searchArticlesPage),
           backgroundColor: Colors.blue,
         ),
         body: Column(
@@ -37,11 +36,12 @@ class _ArticleSearchState extends State<ArticleSearch> {
                     fontSize: 18,
                     color: Colors.black,
                   ),
-                  decoration: const InputDecoration(
-                    hintText: '検索したい記事を入力しよう！'
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.searchHintText
                   ),
                   onSubmitted: (String value) async {
-                    final results = await searchArticles(value);
+                    /* 記事取得APIの実行 */
+                    final results = await HttpApiArticles.searchArticles(true, value);
                     setState(() =>
                       articles = results
                     );
@@ -61,19 +61,5 @@ class _ArticleSearchState extends State<ArticleSearch> {
           ),
       ),
     );
-  }
-
-  /* 記事取得APIの実行メソッド */
-  Future<List<Article>> searchArticles(String keyword) async {
-    final url = Uri.parse('https://zenn.dev/api/articles?username=$keyword&order=latest');
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-      final List<dynamic> articles = jsonResponse['articles'];
-      return articles.map((dynamic json) => Article.fromJson(json)).toList();
-    } else {
-      return [];
-    }
   }
 }
